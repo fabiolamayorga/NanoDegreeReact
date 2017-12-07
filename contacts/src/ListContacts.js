@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
@@ -24,12 +25,13 @@ class ListContacts extends Component { //Stateless Functional Components
   }
 
   render(){
+    console.log(this.props)
     const { contacts, onDeleteContact } = this.props
     const { query } = this.state
     let showingContacts
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i')
-      showingContacts = contacts.filter((contact) => match.test(contact.name))
+      showingContacts = contacts.reduce((contact) => match.test(contact.name))
     }else {
       showingContacts = contacts
       showingContacts.sort(sortBy('name'))
@@ -45,6 +47,11 @@ class ListContacts extends Component { //Stateless Functional Components
             value={query}
             onChange={(event) => this.updateQuery(event.target.value)}
           />
+          <Link
+            to="/create"
+            className="add-contact"
+            >Add Contact
+          </Link>
         </div>
 
         {showingContacts.length !== contacts.length && (
