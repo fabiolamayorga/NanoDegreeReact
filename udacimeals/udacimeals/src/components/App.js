@@ -68,6 +68,8 @@ class App extends Component {
     const { calendar, selectRecipe, remove } = this.props
     const mealOrder = ['breakfast', 'lunch', 'dinner']
 
+    console.log('selectRecipe',selectRecipe);
+    console.log('calendar',calendar);
 
     return (
       <div className='container'>

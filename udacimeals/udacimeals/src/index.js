@@ -8,11 +8,11 @@ import reducer from './reducers'
 import { Provider } from 'react-redux'
 
 const logger = store => next => action => {
-  console.group(action.type)
-  console.info('dispatching', action)
+  //console.group(action.type)
+  //console.info('dispatching', action)
   let result = next(action)
-  console.log('next state', store.getState())
-  console.groupEnd(action.type)
+  //console.log('next state', store.getState())
+  //console.groupEnd(action.type)
   return result
 }
 
@@ -26,9 +26,11 @@ const store = createStore(
   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
-console.log(store.getState())
+console.log('store',store)
 
 ReactDOM.render(
+  console.log('store',store)
+
   <Provider store={store}>
     <App />
   </Provider>, document.getElementById('root')
