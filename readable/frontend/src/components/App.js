@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './../App.css';
 import { connect } from 'react-redux'
-import { fetchCategories } from '../actions'
+import { getAllCategories } from '../actions'
 import * as CategoriesAPI from '../utils/api-server/categories'
 
 class App extends Component {
@@ -22,8 +22,9 @@ class App extends Component {
 
     /*const url = `${process.env.REACT_APP_BACKEND}/categories`;
     console.log('fetching from url', url);
-    fetch(url, { headers: { 'Authorization': 'whatever-you-want' },
-                 credentials: 'include' } )
+    fetch(url, { headers:
+                { 'Authorization': 'whatever-you-want' },
+                  credentials: 'include' } )
       .then( (res) => { console.log('res',res);return(res.text()) })
       .then((data) => {
       console.log('data',data)
@@ -59,7 +60,7 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps (dispatch) {
   return {
-    selectCategories: (data) => dispatch(fetchCategories())
+    selectCategories: (data) => dispatch(getAllCategories())
   }
 
 }

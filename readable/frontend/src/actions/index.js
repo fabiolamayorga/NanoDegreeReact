@@ -1,5 +1,7 @@
-import * as url from '../utils/api-server/categories';
+import * as api from '../utils/api-server/categories';
 // const url = `${process.env.REACT_APP_BACKEND}/categories`
+
+const headers = {'Authorization': 'whatever-you-want'}
 
 /*Const for Categories*/
 export const GET_CATEGORIES = 'GET_CATEGORIES'
@@ -24,14 +26,13 @@ console.log({categories})
   }
 }
 
-export const fetchCategories  = () => dispatch => (
-    url
-  	.getAll()
-		.then(
-        	data => dispatch(getCategories(data.categories)),
-        	error => console.error(error)
-      	)
-)
+export const getAllCategories = () => (
+  fetch(
+    `${api}/categories`,
+    { headers })
+    .then(res => res.json())
+    .then(data => data.categories)
+);
 
 
 
