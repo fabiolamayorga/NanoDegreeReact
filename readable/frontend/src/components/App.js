@@ -14,27 +14,12 @@ class App extends Component {
   componentDidMount() {
     this.props.getCategories();
     this.props.getPosts();
-    /*console.log(CategoriesAPI)
-    CategoriesAPI.getAll().then((categories) => {
-      console.log(categories)
-      this.setState({ categories })
-    })*/
-
-    /*const url = `${process.env.REACT_APP_BACKEND}/categories`;
-    console.log('fetching from url', url);
-    fetch(url, { headers:
-                { 'Authorization': 'whatever-you-want' },
-                  credentials: 'include' } )
-      .then( (res) => { console.log('res',res);return(res.text()) })
-      .then((data) => {
-      console.log('data',data)
-        this.setState({backend:data});
-      });*/
   }
 
   render() {
-    const {getCategories} = this.props
+    const {categories} = this.props
     console.log('this.props',this.props)
+    console.log('categories', categories)
 
     return (
       <div className="App">
@@ -68,6 +53,6 @@ function mapDispatchToProps (dispatch) {
 
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App)

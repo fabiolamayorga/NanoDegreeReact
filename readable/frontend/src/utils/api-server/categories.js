@@ -3,19 +3,6 @@ const config = require('./config')
 
 const api = process.env.REACT_APP_BACKEND || 'http://localhost:3001'
 
-/*const headers = {
-  'Authorization': 'whatever-you-want',
-  'credentials':'include'
-}
-
-export const getAll = () =>
-  fetch(`${api}/categories`,
-    {
-      method: 'GET',
-      headers })
-    .then(res => res.json())
-    .then(data => data.contacts)*/
-
 let db = {}
 
 const defaultData = {
