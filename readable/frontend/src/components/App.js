@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './../App.css';
 import { connect } from 'react-redux'
-import { getAllCategories } from '../actions'
-import * as CategoriesAPI from '../utils/api-server/categories'
+import { getAllCategories, getAllPosts } from '../actions'
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +12,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.selectCategories()
+    this.props.getCategories();
+    this.props.getPosts();
     /*console.log(CategoriesAPI)
     CategoriesAPI.getAll().then((categories) => {
       console.log(categories)
@@ -33,8 +33,8 @@ class App extends Component {
   }
 
   render() {
-    const {selectCategories} = this.props
-    console.log(this.props)
+    const {getCategories} = this.props
+    console.log('this.props',this.props)
 
     return (
       <div className="App">
@@ -60,7 +60,8 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps (dispatch) {
   return {
-    selectCategories: (data) => dispatch(getAllCategories())
+    getCategories: (data) => dispatch(getAllCategories()),
+    getPosts: (data) => dispatch(getAllPosts())
   }
 
 }
