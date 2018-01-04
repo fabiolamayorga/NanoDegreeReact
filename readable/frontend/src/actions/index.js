@@ -7,6 +7,8 @@ const headers = {
 
 /*Const for Categories*/
 export const GET_CATEGORIES = 'GET_CATEGORIES'
+export const GET_CATEGORY_POST = 'GET_CATEGORY_POST'
+
 
 /*Consts for Post Actions*/
 export const ADD_POST = 'ADD_POST'
@@ -21,19 +23,8 @@ export const EDIT_POST_COMMENT = 'EDIT_POST_COMMENT'
 export const DELETE_POST_COMMENT = 'DELETE_POST_COMMENT'
 export const GET_POST_COMMENT = 'GET_POST_COMMENT'
 
-function getCategories(categories){
- return {
-    type: GET_CATEGORIES,
-    categories,
-  }
-}
+export const SET_FILTER = 'SET_FILTER'
 
-function getPosts(posts){
- return {
-    type: GET_ALL_POSTS,
-    posts,
-  }
-}
 
 export const getAllCategories = () => dispatch =>(
   fetch(
@@ -55,9 +46,66 @@ export const getAllPosts = () => dispatch =>(
         	error => console.error('error',error))
 );
 
+export const getAllPostComments = (postId) => dispatch =>(
+  fetch(
+    `${api}/posts/${postId}/comments`,
+    {headers}
+  )
+  .then(res => res.json())
+  .then(data => dispatch(getPostsComments(data)),
+        error => console.error('error',error))
+);
+
+export const getCategoryPosts = (category) => dispatch => (
+  fetch(
+    `${api}/${category}/posts`,
+    {headers}
+  )
+  .then(res => res.json())
+  .then(data => dispatch(getPostByCategory(data)),
+        error => console.error('error',error))
+)
+
+export function setFilter (filter){
+  return{
+    type: SET_FILTER,
+    filter
+  }
+}
+
+function getCategories(categories){
+ return {
+    type: GET_CATEGORIES,
+    categories,
+  }
+}
+
+function getPosts(posts){
+ return {
+    type: GET_ALL_POSTS,
+    posts,
+  }
+}
 
 
-export function addPost ({post}) {
+function getPostsComments(comments){
+ return {
+    type: GET_POST_COMMENT,
+    comments,
+  }
+}
+
+function getPostByCategory(postsByCategory){
+  return {
+     type: GET_CATEGORY_POST,
+     postsByCategory,
+   }
+}
+
+
+
+
+/*export function addPost ({post}) {
   return {
     type: ADD_POST,
     post,
@@ -76,4 +124,4 @@ export function deletePost ({post}) {
     type: DELETE_POST,
     post,
   }
-}
+}*/
