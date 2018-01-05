@@ -62,9 +62,6 @@ class App extends Component {
 
   render() {
     const {categories, posts, filter, postsByCategory} = this.props
-    //console.log("props", this.props)
-    //console.log('filter',filter)
-    //console.log('postsByCategory',postsByCategory)
 
     return (
       <div className="container">
@@ -80,18 +77,18 @@ class App extends Component {
 
         )}/>
 
-        <Route exact path="/:category" render={ ({ match }) => (
-          <div>
-            {
-              this.onSelectCategory(match.params.category)
-            }
-            <Category
-              filter={match.params.category}
-              posts={posts}
-            />
+      <Route exact path="/:category" render={ ({ match }) => {
+          this.onSelectCategory(match.params.category)
+          return (
+            <div>
+              <Category
+                filter={match.params.category}
+                posts={posts}
+              />
 
-          </div>
-        )} />
+            </div>
+          )
+        }} />
 
 
         <Route exact path="/:category/:postId" render= { ({ match }) => { //Renders Post View
@@ -129,7 +126,7 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     getCategories: (data) => dispatch(getAllCategories()),
     getPosts: (data) => dispatch(getAllPosts()),

@@ -56,7 +56,7 @@ export const getAllPostComments = (postId) => dispatch =>(
         error => console.error('error',error))
 );
 
-export const getCategoryPosts = (category) => dispatch => (
+export const getCategoryPosts = (category) => dispatch => ( //Get Posts filtered by category
   fetch(
     `${api}/${category}/posts`,
     {headers}

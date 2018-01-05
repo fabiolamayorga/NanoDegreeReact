@@ -1,19 +1,29 @@
-/*import React, { Component } from "react";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Post from './Post'
 
 
-export default function Post ({ post }) {
-  componentDidMount() {
-    console.log('es una pruenba')
+export default function Category ({ filter, posts, onSelectCategory }) {
+  let filteredPosts = {}
+
+  if(posts.length > 0){
+    filteredPosts = posts.filter(p => p.category == filter)
   }
 
   return (
-    <p>Category</p>
+    <div className='posts-container'>
+      {filteredPosts.length > 0 && (
+        filteredPosts.map(post => (
+          <Post post={post} key={post.id}/>
+        ))
+      )}
+    </div>
   )
 }
-*/
 
 
-import React, { Component } from 'react';
+
+/*import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Post from './Post'
 
@@ -40,4 +50,4 @@ class Category extends Component {
   }
 }
 
-export default Category
+export default Category*/
