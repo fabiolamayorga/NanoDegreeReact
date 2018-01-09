@@ -8,6 +8,7 @@ import { getAllCategories,
   getCategoryPosts } from '../actions'
 import Root from './Root'
 import Category from './Category'
+import PostView from './PostView'
 
 import { Route } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
@@ -17,16 +18,14 @@ import { withRouter } from 'react-router-dom'
 class App extends Component {
   constructor(props) {
     super(props);
-    /*this.state = {
-      value: 'coconut'
-    };*/
   }
 
   state = {
     categories: null,
     posts: null,
     comments: null,
-    filter: 'All'
+    filter: 'All',
+    showComments : false
   }
 
   getInitialState = () => {
@@ -36,9 +35,8 @@ class App extends Component {
 
 
   getPostsComments = (postId) => { //retrieve all the comments
-    //const {posts} = this.props
-    //console.log(posts)
-    //let comments
+    const {posts} = this.props
+    let comments
 
     //if (posts.length > 0) {
       //comments = posts.map(post => (
@@ -47,6 +45,19 @@ class App extends Component {
     //}
   }
 
+  toggleShowAllComments = (postId) => {
+    //console.log('postId',postId)
+    let isActive = this.state.showComments ? false : true
+    this.setState({
+      showComments:isActive
+    })
+
+
+
+    if (this.state.showComments){
+      this.getPostsComments(postId)
+    }
+  }
 
   onSelectCategory = (selectedCategory) => {
     this.props.setFilter(selectedCategory)
@@ -58,10 +69,25 @@ class App extends Component {
 
   componentDidMount() {
     this.getInitialState()
+    //this.getPostsComments();
+
+    //console.log('posts',this.props);
   }
 
+
+
   render() {
-    const {categories, posts, filter, postsByCategory} = this.props
+    const {categories, posts, filter, comments} = this.props
+    //let comments
+
+    if (posts.length > 0){
+      //posts.map(post => (
+        //this.getPostsComments(post.id)
+      //))
+    }
+
+    console.log(this.props)
+    //console.log('comments',comments)
 
     return (
       <div className="container">
@@ -91,8 +117,16 @@ class App extends Component {
         }} />
 
 
-        <Route exact path="/:category/:postId" render= { ({ match }) => { //Renders Post View
-
+      <Route exact path="/post/:postId" render= { ({ match }) => { //Renders Post View
+            return(
+              <div>
+                <PostView
+                  posts={posts}
+                  postId= {match.params.postId}
+                  toggleShowAllComments= {this.toggleShowAllComments}
+                  />
+              </div>
+            )
         }} />
 
 
@@ -104,7 +138,7 @@ class App extends Component {
 
 
 function mapStateToProps (state) {
-  console.log('state',state)
+  console.log('state', state)
   let categories = state.categories
   let posts = state.posts
   let comments = state.comments
@@ -114,8 +148,8 @@ function mapStateToProps (state) {
     categories,
     posts,
     filter,
-    postsByCategory
-    //comments
+    postsByCategory,
+    comments
 
     //...state
     /*categories,

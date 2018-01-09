@@ -29,10 +29,10 @@ function posts (state = {}, action){
 }
 
 function postComments (state = {}, action) {
-	//console.log('action', action)
+	console.log('action', action)
 	switch (action.type) {
       case GET_POST_COMMENT:
-        return [ ...state, ...action.comments ]
+        return [ ...action.comments ]
       default:
         return state
     }

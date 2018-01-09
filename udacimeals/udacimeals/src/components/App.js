@@ -71,6 +71,7 @@ class App extends Component {
     console.log('selectRecipe',selectRecipe);
     console.log('calendar',calendar);
 
+    console.log(this.props);
     return (
       <div className='container'>
 

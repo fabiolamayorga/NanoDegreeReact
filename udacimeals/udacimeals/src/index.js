@@ -27,11 +27,8 @@ const store = createStore(
   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
-console.log('store',store)
 
 ReactDOM.render(
-  console.log('store',store)
-
   <Provider store={store}>
     <App />
   </Provider>, document.getElementById('root')

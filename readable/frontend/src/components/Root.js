@@ -2,7 +2,6 @@ import React from 'react'
 import Post from './Post'
 import CategorieDropdown from './CategorieDropdown'
 import { Link } from 'react-router-dom'
-import { Route } from 'react-router-dom'
 
 export default function Root ({ categories, posts, onSelectCategory }) {
   if (posts.length === 0) {

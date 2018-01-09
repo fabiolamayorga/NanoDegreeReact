@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import VoteControls from './VoteControls'
 
 
 function formatDate (timestamp) {
@@ -9,12 +10,14 @@ function formatDate (timestamp) {
 
 export default function Post ({ post }) {
   return (
-      <div key={post.id} className="post">
-        <div className="post-author">{post.author}</div>
-        <div className="post-category">{post.category}</div>
-        <div className="post-date">{formatDate(post.timestamp)}</div>
-        <div className="post-body">{post.body}</div>
-      </div>
-
+      <Link to={`/post/${post.id}`}>
+        <div key={post.id} className="post">
+          <div className="post-author">{post.author}</div>
+          <div className="post-category">{post.category}</div>
+          <div className="post-body">{post.body}</div>
+          <div className="post-score">{post.voteScore}</div>
+          <VoteControls/>
+        </div>
+      </Link>
   )
 }
