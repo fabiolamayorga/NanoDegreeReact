@@ -4,7 +4,7 @@ import CategorieDropdown from './CategorieDropdown'
 import { Link } from 'react-router-dom'
 
 export default function Root ({ categories, posts, onSelectCategory }) {
-  if (posts.length === 0) {
+  if ( posts === null) {
     return <p>There aren't posts</p>
   }
 

@@ -7,7 +7,7 @@ export default function Category ({ filter, posts, onSelectCategory }) {
   let filteredPosts = {}
 
   if(posts.length > 0){
-    filteredPosts = posts.filter(p => p.category == filter)
+    filteredPosts = posts.filter(p => p.category === filter)
   }
 
   return (

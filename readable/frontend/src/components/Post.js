@@ -10,7 +10,7 @@ function formatDate (timestamp) {
 
 export default function Post ({ post }) {
   return (
-      <Link to={`/post/${post.id}`}>
+      <Link to={`/${post.category}/${post.id}`}>
         <div key={post.id} className="post">
           <div className="post-author">{post.author}</div>
           <div className="post-category">{post.category}</div>

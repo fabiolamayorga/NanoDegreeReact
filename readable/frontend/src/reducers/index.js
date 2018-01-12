@@ -29,10 +29,15 @@ function posts (state = {}, action){
 }
 
 function postComments (state = {}, action) {
-	console.log('action', action)
+	console.log('state reducer', state)
+	console.log('action reduce', action)
+	/*if (action.comments.length === 0 && action.comments !== undefined) {
+		return state
+	}*/
 	switch (action.type) {
       case GET_POST_COMMENT:
-        return [ ...action.comments ]
+				return [ ...action.comments ]
+
       default:
         return state
     }
@@ -41,7 +46,7 @@ function postComments (state = {}, action) {
 function filter (state = {}, action) {
 	switch (action.type) {
 			case SET_FILTER:
-				return action.filter
+				return [...state, action.filter]
 			default:
 				return state
 		}
