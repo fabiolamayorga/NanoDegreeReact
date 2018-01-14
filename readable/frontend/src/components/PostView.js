@@ -30,6 +30,7 @@ export default function PostView ({ posts, postId, toggleShowAllComments}) {
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Post from './Post'
+import Comment from './Comment'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
@@ -40,10 +41,11 @@ import {
 class PostView extends Component {
 
   render() {
-    const {posts, postId, postComments, toggleShowAllComments} = this.props
+    const {posts, postId, postComments, toggleShowAllComments, clickUpVote} = this.props
     let selectedPost = []
+    //console.log()
 
-    //console.log('post view',this.props)
+    console.log('post view',this.props)
 
     if(posts.length > 0){
       selectedPost = posts.filter(p => p.id == postId)
@@ -54,31 +56,20 @@ class PostView extends Component {
 
         {selectedPost.length > 0 && (
           selectedPost.map(post => (
-            <Post post={post} key={post.id}/>
+            <Post post={post} key={post.id} clickUpVote={clickUpVote} />
           ))
         )}
         <span onClick={() => toggleShowAllComments(postId)}>Show Comments</span>
+        <div class="comments-container">
+            {postComments.length > 0 && (
+              postComments.map(comment => (
+                <Comment comment={comment} key={comment.id} />
+              ))
+            )}
+        </div>
 
       </div>
     )
   }
 }
-
-function mapStateToProps (state) {
-  let postComments = state.comments
-  console.log("mapStateToProps POST",state)
-  return {
-    postComments
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    //getCategories: (data) => dispatch(getAllCategories()),
-    //getPosts: (data) => dispatch(getAllPosts()),
-    //getAllComments: (postId) => dispatch(getAllPostComments(postId)),
-  }
-}
-
-
 export default PostView

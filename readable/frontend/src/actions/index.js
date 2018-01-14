@@ -17,6 +17,9 @@ export const DELETE_POST = 'DELETE_POST'
 export const GET_POST = 'GET_POST'
 export const GET_ALL_POSTS = 'GET_ALL_POSTS'
 
+
+export const UP_VOTE = 'UP_VOTE'
+
 /*Consts for comments*/
 export const ADD_POST_COMMENT = 'ADD_POST_COMMENT'
 export const EDIT_POST_COMMENT = 'EDIT_POST_COMMENT'
@@ -24,7 +27,6 @@ export const DELETE_POST_COMMENT = 'DELETE_POST_COMMENT'
 export const GET_POST_COMMENT = 'GET_POST_COMMENT'
 
 export const SET_FILTER = 'SET_FILTER'
-
 
 export const getAllCategories = () => dispatch =>(
   fetch(
@@ -81,6 +83,19 @@ export const getCategoryPosts = (category) => dispatch => ( //Get Posts filtered
   .then(res => res.json())
   .then(data => dispatch(getPostByCategory(data)),
         error => console.error('error',error))
+);
+
+export const upVotePost = (id) => dispatch => (
+  fetch(
+    `${api}/posts/${id}`,{
+      method: 'POST',
+      headers: {'Authorization': 'whatever-you-want'},
+      body: JSON.stringify({ option: 'upVote'})
+    }
+  )
+  .then(res => res.json())
+  .then(data => dispatch(upVote(data)),
+        error => console.error('error',error))
 )
 
 export function setFilter (filter){
@@ -106,6 +121,7 @@ function getPosts(posts){
 
 
 function getPostsComments(comments){
+  console.log('comments',comments)
  return {
     type: GET_POST_COMMENT,
     comments
@@ -119,7 +135,12 @@ function getPostByCategory(postsByCategory){
    }
 }
 
-
+function upVote(post){
+  return {
+     type: UP_VOTE,
+     post,
+   }
+}
 
 
 /*export function addPost ({post}) {

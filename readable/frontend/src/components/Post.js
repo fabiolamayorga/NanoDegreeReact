@@ -8,16 +8,16 @@ function formatDate (timestamp) {
   return date.toString()
 }
 
-export default function Post ({ post }) {
+export default function Post ({ post , clickUpVote }) {
   return (
-      <Link to={`/${post.category}/${post.id}`}>
         <div key={post.id} className="post">
-          <div className="post-author">{post.author}</div>
+          <Link to={`/${post.category}/${post.id}`}>
+            <div className="post-author">{post.author}</div>
+          </Link>
           <div className="post-category">{post.category}</div>
           <div className="post-body">{post.body}</div>
           <div className="post-score">{post.voteScore}</div>
-          <VoteControls/>
+          <VoteControls postId={post.id} clickUpVote={clickUpVote}/>
         </div>
-      </Link>
   )
 }

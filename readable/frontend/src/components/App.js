@@ -5,7 +5,9 @@ import {
   setFilter,
   getCategoryPosts,
   getAllPosts,
-  getAllCategories} from '../actions'
+  getAllCategories,
+  getAllPostComments,
+  upVotePost} from '../actions'
 import Root from './Root'
 import Category from './Category'
 import PostView from './PostView'
@@ -25,9 +27,6 @@ class App extends Component {
     showComments : false
   }
 
-  getInitialState = () => {
-
-  }
 
 
   onSelectCategory = (selectedCategory) => {
@@ -38,15 +37,23 @@ class App extends Component {
     this.props.getPostByCategory(selectedCategory)
   }
 
-  componentDidMount() {
-    //this.props.getCategories();
-    //this.props.getPosts();
+  toggleShowAllComments = (postId) => {
+    this.props.getAllComments(postId)
+  }
+
+
+  clickUpVote = (isPost, id) => {
+    console.log('clicking')
+    //if (isPost){
+      this.props.upVotePost(id)
+    //}else {
+      //this.props.upVoteComment(id)
+    //}
   }
 
   render() {
-    const {categories, posts, filter, comments} = this.props
+    const {categories, posts, filter, postComments} = this.props
 
-    console.log(this.props)
     return (
       <div className="container">
         <Route exact path='/' render={() => (
@@ -56,6 +63,7 @@ class App extends Component {
                 categories={categories}
                 posts={posts}
                 onSelectCategory={this.onSelectCategory}
+                clickUpVote = {this.clickUpVote}
                 />
             </div>
 
@@ -82,6 +90,9 @@ class App extends Component {
                 <PostView
                   posts={posts}
                   postId={match.params.postId}
+                  toggleShowAllComments={this.toggleShowAllComments}
+                  postComments={postComments}
+                  clickUpVote = {this.clickUpVote}
                   />
               </div>
             )
@@ -96,24 +107,14 @@ class App extends Component {
 
 
 function mapStateToProps (state) {
-  console.log('mapStateToProps APP', state)
   let categories = state.categories
   let posts = state.posts
   let comments = state.comments
-  let filter = state.filter
+  //let filter = state.filter
   //console.log(comments);
   //console.log(posts)
   return {
-    /*categories,
-    posts,
-    filter,
-    comments*/
-
-    //...state
-    categories,
-    filter,
-    posts,
-    comments
+      ...state
 
   }
 }
@@ -122,9 +123,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getCategories: (data) => dispatch(getAllCategories()),
     getPosts: (data) => dispatch(getAllPosts()),
-    //getAllComments: (postId) => dispatch(getAllPostComments(postId)),
+    getAllComments: (postId) => dispatch(getAllPostComments(postId)),
     //setFilter: (filter) => dispatch(setFilter(filter)),
-    getPostByCategory: (category) => dispatch(getCategoryPosts(category))
+    getPostByCategory: (category) => dispatch(getCategoryPosts(category)),
+    upVotePost: (id) => dispatch(upVotePost(id))
   }
 
 }

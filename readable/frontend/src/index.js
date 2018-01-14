@@ -24,7 +24,7 @@ const store = createStore(
 
 store.dispatch(getAllPosts())
 store.dispatch(getAllCategories())
-store.dispatch(receiveComments())
+//store.dispatch(receiveComments())
 
 
 ReactDOM.render(
