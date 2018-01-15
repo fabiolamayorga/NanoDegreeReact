@@ -85,17 +85,22 @@ export const getCategoryPosts = (category) => dispatch => ( //Get Posts filtered
         error => console.error('error',error))
 );
 
-export const upVotePost = (id) => dispatch => (
+export const upVotePost = (id, isUpvote) => dispatch => (
   fetch(
     `${api}/posts/${id}`,{
       method: 'POST',
-      headers: {'Authorization': 'whatever-you-want'},
-      body: JSON.stringify({ option: 'upVote'})
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ option: isUpvote ? "upVote":"downVote"})
     }
   )
   .then(res => res.json())
-  .then(data => dispatch(upVote(data)),
-        error => console.error('error',error))
+  .then(data => {
+      dispatch(upVote(data));
+      console.log('action', data)
+        error => console.error('error',error)})
 )
 
 export function setFilter (filter){

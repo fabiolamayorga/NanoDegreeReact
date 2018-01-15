@@ -10,13 +10,12 @@ function formatDate (timestamp) {
 
 export default function Comment ({ comment }) {
   return (
-      <Link to={`/${comment.category}/${comment.id}`}>
-        <div key={comment.id} className="comment">
-          <div className="comment-author">{comment.author}</div>
-          <div className="comment-body">{comment.body}</div>
-          <div className="comment-score">{comment.voteScore}</div>
-          <VoteControls/>
-        </div>
-      </Link>
+      <div key={comment.id} className="comment">
+        <div className="comment-title">Comment Title:{comment.title}</div>
+        <div className="comment-author">Comment Author:{comment.author}</div>
+        <div className="comment-body">{comment.body}</div>
+        <div className="comment-score">Comment Score: {comment.voteScore}</div>
+        <VoteControls/>
+      </div>
   )
 }

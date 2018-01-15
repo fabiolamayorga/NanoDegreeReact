@@ -23,7 +23,6 @@ function posts (state = {}, action){
       case GET_ALL_POSTS:
         return [ ...action.posts ]
 			case UP_VOTE:
-				action.post.voteScore += 1
 				return state.map(post => {
 					return post.id === action.post.id ? action.post : post
 				})
@@ -61,13 +60,6 @@ function postByCategory(state = {}, action) {
 		}
 }
 
-function upVotePost(state = {}, action) {
-	switch (action.type) {
-
-			default:
-				return state
-		}
-}
 
 export default combineReducers({
   categories,

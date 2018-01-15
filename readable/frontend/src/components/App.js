@@ -11,23 +11,15 @@ import {
 import Root from './Root'
 import Category from './Category'
 import PostView from './PostView'
-
 import { Route } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
-
+import CategorieDropdown from './CategorieDropdown'
 
 
 class App extends Component {
 
   state = {
-    categories: null,
-    posts: null,
-    comments: null,
-    filter: 'All',
-    showComments : false
   }
-
-
 
   onSelectCategory = (selectedCategory) => {
     this.props.setFilter(selectedCategory)
@@ -42,28 +34,45 @@ class App extends Component {
   }
 
 
-  clickUpVote = (isPost, id) => {
+  clickUpVote = (isPost, id) => {//TODO cambiarlo a upVote and downVote Post
     console.log('clicking')
-    //if (isPost){
-      this.props.upVotePost(id)
-    //}else {
+    if (isPost){
+      this.props.upVotePost(id, true)
+    }else {
       //this.props.upVoteComment(id)
-    //}
+    }
   }
+
+  clickDownVote = (isPost, id) => {
+    if (isPost){
+      this.props.upVotePost(id, false)
+    }else {
+      //this.props.upVoteComment(id)
+    }
+  }
+
+  addPost = (values) => {
+
+  }
+
 
   render() {
     const {categories, posts, filter, postComments} = this.props
 
     return (
       <div className="container">
+        {categories.length > 0 && (
+          <CategorieDropdown categories={categories}/>
+        )}
+
         <Route exact path='/' render={() => (
             <div>
               <Root
                 filter=""
                 categories={categories}
                 posts={posts}
-                onSelectCategory={this.onSelectCategory}
                 clickUpVote = {this.clickUpVote}
+                clickDownVote = {this.clickDownVote}
                 />
             </div>
 
@@ -74,6 +83,7 @@ class App extends Component {
             <div>
               <Category
                 filter={match.params.category}
+                categories={categories}
                 posts={posts}
               />
 
@@ -83,12 +93,11 @@ class App extends Component {
 
 
       <Route exact path="/:category/:postId" render= { ({ match }) => { //Renders Post View
-        //console.log(this.props)
-
             return(
               <div>
                 <PostView
                   posts={posts}
+                  categories={categories}
                   postId={match.params.postId}
                   toggleShowAllComments={this.toggleShowAllComments}
                   postComments={postComments}
@@ -97,7 +106,6 @@ class App extends Component {
               </div>
             )
         }} />
-
 
       </div>
 
@@ -110,6 +118,7 @@ function mapStateToProps (state) {
   let categories = state.categories
   let posts = state.posts
   let comments = state.comments
+  console.log(state)
   //let filter = state.filter
   //console.log(comments);
   //console.log(posts)
@@ -126,7 +135,7 @@ const mapDispatchToProps = (dispatch) => {
     getAllComments: (postId) => dispatch(getAllPostComments(postId)),
     //setFilter: (filter) => dispatch(setFilter(filter)),
     getPostByCategory: (category) => dispatch(getCategoryPosts(category)),
-    upVotePost: (id) => dispatch(upVotePost(id))
+    upVotePost: (id, isUpvote) => dispatch(upVotePost(id, isUpvote))
   }
 
 }

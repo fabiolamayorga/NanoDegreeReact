@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Post from './Post'
 
-
-export default function Category ({ filter, posts, onSelectCategory }) {
+export default function Category ({ filter, posts }) {
   let filteredPosts = {}
 
   if(posts.length > 0){
