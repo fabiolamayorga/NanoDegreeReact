@@ -25,3 +25,7 @@ To accesss the backend server in your code, we have stored the URL to the API se
 ## Navigation
 - The side list of items allows the user to go to the each of the categories of the project.
 - Clicking the titles of the each Post will redirect the user to see the details of that specific post.
+
+
+## Notes
+- The 'SHOW COMMENTS' button only dispatch the action to bring the comments for the current post, if there aren't comments nothing happens.

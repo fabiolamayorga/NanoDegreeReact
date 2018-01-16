@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Post from './Post'
 import Comment from './Comment'
-import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton';
 import AddCommentView from './AddCommentView'
 
 
@@ -27,7 +27,7 @@ class PostView extends Component {
 
 
     return (
-        isDeleted === false && (
+        isDeleted === false ? (
 
         <div className="view-container">
 
@@ -36,7 +36,7 @@ class PostView extends Component {
               <Post post={post} key={post.id} clickUpVote={clickUpVote} editThePost={editThePost} clickDownVote={clickDownVote}/>
           ))
           )}
-          <FlatButton onClick={() => toggleShowAllComments(postId)}>Show Comments</FlatButton>
+          <RaisedButton onClick={() => toggleShowAllComments(postId)} label="SHOW COMMENTS"/>
           <div className="comments-container">
               {postComments.length > 0 && (
                 postComments.map(comment => (
@@ -47,6 +47,8 @@ class PostView extends Component {
           <AddCommentView addComment={addComment} postId={postId}/>
 
         </div>
+      ): (
+        <p>THIS POST HAS BEEN DELETED</p>
       )
 
     )

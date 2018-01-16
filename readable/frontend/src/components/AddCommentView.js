@@ -51,7 +51,7 @@ class AddCommentView extends Component {
 
     return (
       <div>
-        <RaisedButton label="Add New Comment" onClick={this.handleOpen} className="add-button" />
+        <RaisedButton label="Add New Comment" onClick={this.handleOpen} className="add-button" primary={true}/>
         <Dialog
           title="Add a New Comment"
           actions={actions}

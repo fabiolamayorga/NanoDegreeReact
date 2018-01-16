@@ -49,7 +49,7 @@ class AddPostView extends Component {
 
     return (
       <div>
-        <RaisedButton label="Add New Post" onClick={this.handleOpen} />
+        <RaisedButton label="Add New Post" onClick={this.handleOpen} primary={true} />
         <Dialog
           title="Add a New Post"
           actions={actions}
