@@ -9,7 +9,7 @@ import serializeForm from 'form-serialize'
 import uuid from 'uuid/v1'
 
 
-class AddPostView extends Component {
+class AddCommentView extends Component {
   state = {
     open: false,
     author: "",
@@ -33,7 +33,8 @@ class AddPostView extends Component {
     const values = serializeForm(e.target, { hash: true })
     values.timestamp = Date.now()
     values.id = uuid()
-    this.props.addPost(values)
+    values.parentId = this.props.postId
+    this.props.addComment(values)
     this.handleClose()
   }
 
@@ -53,9 +54,9 @@ class AddPostView extends Component {
 
     return (
       <div>
-        <RaisedButton label="Add New Post" onClick={this.handleOpen} />
+        <RaisedButton label="Add New Comment" onClick={this.handleOpen} className="add-button" />
         <Dialog
-          title="Add a New Post"
+          title="Add a New Comment"
           actions={actions}
           modal={false}
           open={this.state.open}
@@ -66,19 +67,10 @@ class AddPostView extends Component {
             hintText="Author"
             name="author"
           /><br/>
-        <select onChange={this.handleChange} name="category">
-            <option value={"react"}>React</option>
-            <option value={"redux"}>Redux</option>
-            <option value={"udacity"}>Udacity</option>
-        </select><br/>
-        <TextField
-          hintText="Post Title"
-          name="title"
-        /><br/>
           <TextField
-          hintText="Post Body"
+          hintText="Comment Body"
           name="body"
-          floatingLabelText="Post Text"
+          floatingLabelText="Comment Text"
           multiLine={true}
           rows={2}
           /><br />
@@ -93,4 +85,4 @@ class AddPostView extends Component {
   }
 }
 
-export default AddPostView
+export default AddCommentView

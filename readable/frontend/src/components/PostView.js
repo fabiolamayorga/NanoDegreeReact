@@ -5,6 +5,8 @@ import Comment from './Comment'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton'
+import AddCommentView from './AddCommentView'
+
 
 class PostView extends Component {
 
@@ -13,7 +15,9 @@ class PostView extends Component {
       postId,
       postComments,
       toggleShowAllComments,
-      clickUpVote} = this.props
+      clickUpVote,
+      clickDownVote,
+      editThePost, addComment, editComment, deleteComment} = this.props
     let selectedPost = []
 
     if(posts.length > 0){
@@ -21,21 +25,22 @@ class PostView extends Component {
     }
 
     return (
-      <div className='post-container'>
+      <div className="view-container">
 
         {selectedPost.length > 0 && (
           selectedPost.map(post => (
-            <Post post={post} key={post.id} clickUpVote={clickUpVote} />
+            <Post post={post} key={post.id} clickUpVote={clickUpVote} editThePost={editThePost} clickDownVote={clickDownVote}/>
           ))
         )}
         <FlatButton onClick={() => toggleShowAllComments(postId)}>Show Comments</FlatButton>
         <div className="comments-container">
             {postComments.length > 0 && (
               postComments.map(comment => (
-                <Comment comment={comment} key={comment.id} />
+                <Comment comment={comment} key={comment.id} clickUpVote={clickUpVote}  clickDownVote={clickDownVote} editComment={editComment} deleteComment={deleteComment}/>
               ))
             )}
         </div>
+        <AddCommentView addComment={addComment} postId={postId}/>
 
       </div>
     )

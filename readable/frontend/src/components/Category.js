@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Post from './Post'
 
-export default function Category ({ filter, posts }) {
+export default function Category ({ filter, posts, clickUpVote, editThePost }) {
   let filteredPosts = {}
 
   if(posts.length > 0){
@@ -10,10 +10,10 @@ export default function Category ({ filter, posts }) {
   }
 
   return (
-    <div className='posts-container'>
+    <div className='view-container'>
       {filteredPosts.length > 0 && (
         filteredPosts.map(post => (
-          <Post post={post} key={post.id}/>
+          <Post post={post} key={post.id} clickUpVote={clickUpVote} editThePost={editThePost}/>
         ))
       )}
     </div>

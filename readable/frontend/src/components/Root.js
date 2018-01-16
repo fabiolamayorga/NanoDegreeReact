@@ -1,28 +1,50 @@
-import React from 'react'
+import React, { Component } from 'react';
 import Post from './Post'
 import CategorieDropdown from './CategorieDropdown'
 import { Link } from 'react-router-dom'
 import AddPostView from './AddPostView'
+import sortBy from 'sort-by'
 
 
-export default function Root ({ categories, posts, clickUpVote, clickDownVote }) {
-  if ( posts === null) {
-    return <p>There aren't posts</p>
+class Root extends Component {
+  state = {
+      order: 'timestamp'
+  }
+  selectOrder = (e) => {
+      this.setState({
+          order: e.target.value
+      })
   }
 
-  return (
-    <div>
-      <div className='posts-container'>
-        {posts.length > 0 && (
-          posts.map(post => (
-            <Post post={post} key={post.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote}/>
+ render (){
+   const {categories, posts, clickUpVote, clickDownVote, addPost, editThePost,deleteThePost} = this.props
 
-          ))
-        )}
-      </div>
-      <AddPostView categories={categories}/>
+   return (
+     <div className="view-container">
+       <label>Sort Posts By: </label>
+       <select value={this.state.order} onChange={this.selectOrder}>
+            <option value="timestamp">Most Recent</option>
+            <option value="voteScore">Popular</option>
+        </select>
+       <div className='posts-container'>
+         {posts.length > 0 && (
+           posts.sort(sortBy(this.state.order)).map(post => (
+             <Post post={post}
+               key={post.id}
+               clickUpVote={clickUpVote}
+               clickDownVote={clickDownVote}
+               addPost={addPost}
+               editThePost={editThePost}
+               deleteThePost={deleteThePost}/>
+           ))
+         )}
+       </div>
+       <AddPostView categories={categories} addPost={addPost}/>
 
-    </div>
+     </div>
 
-  )
+   )
+ }
 }
+
+export default Root

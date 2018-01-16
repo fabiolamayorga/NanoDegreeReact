@@ -11,7 +11,7 @@ export default function CategorieDropdown ({categories}) {
   };
 
   return(
-    <Paper style={style}>
+    <Paper style={style} className="category-dropdown">
       <Menu>
         <MenuItem><Link to="/">All</Link></MenuItem>
         {categories.map(category => (

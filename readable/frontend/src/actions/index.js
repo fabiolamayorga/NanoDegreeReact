@@ -25,6 +25,8 @@ export const ADD_POST_COMMENT = 'ADD_POST_COMMENT'
 export const EDIT_POST_COMMENT = 'EDIT_POST_COMMENT'
 export const DELETE_POST_COMMENT = 'DELETE_POST_COMMENT'
 export const GET_POST_COMMENT = 'GET_POST_COMMENT'
+export const UP_VOTE_COMMENT = 'UP_VOTE_COMMENT'
+
 
 export const SET_FILTER = 'SET_FILTER'
 
@@ -101,14 +103,120 @@ export const upVotePost = (id, isUpvote) => dispatch => (
       dispatch(upVote(data));
       console.log('action', data)
         error => console.error('error',error)})
+);
+
+export const voteComment = (id, isUpVote) => dispatch => (
+  fetch(
+    `${api}/comments/${id}`,{
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ option: isUpVote ? "upVote":"downVote"})
+    }
+  )
+  .then(res => res.json())
+  .then(data => {
+      dispatch(upVoteComent(data));
+      console.log('action', data)
+        error => console.error('error',error)})
 )
 
-export function setFilter (filter){
-  return{
-    type: SET_FILTER,
-    filter
-  }
-}
+export const addNewPost = (values) => dispatch => (
+  fetch(
+    `${api}/posts`,{
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }
+  )
+  .then(res => res.json())
+  .then(data => {
+      dispatch(addPost(data));
+      console.log('action', data)
+        error => console.error('error',error)})
+)
+
+export const editThePost = (id, values) => dispatch => (
+  fetch(
+    `${api}/posts/${id}`,{
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }
+  )
+  .then(res => res.json())
+  .then(data => {
+      dispatch(editPost(data));
+      console.log('action', data)
+        error => console.error('error',error)})
+)
+
+export const deleteThePost = (postId) => dispatch =>(
+  fetch(
+    `${api}/posts/${postId}`,{
+      method: 'DELETE',
+      headers: {
+        ...headers }
+    })
+  .then(res => res.text())
+  .then(data => dispatch(deletePost(postId)),
+        error => console.error('error',error))
+);
+
+export const addNewComment = (values) => dispatch => (
+  fetch(
+    `${api}/comments`,{
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }
+  )
+  .then(res => res.json())
+  .then(data => {
+      dispatch(addComment(data));
+        error => console.error('error',error)})
+)
+
+export const editTheComment = (id, values) => dispatch => (
+  fetch(
+    `${api}/comments/${id}`,{
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }
+  )
+  .then(res => res.json())
+  .then(data => {
+      dispatch(editComment(data));
+        error => console.error('error',error)})
+)
+
+export const deleteTheComment = (commentId) => dispatch =>(
+  fetch(
+    `${api}/comments/${commentId}`,{
+      method: 'DELETE',
+      headers: {
+        ...headers }
+    })
+  .then(res => res.text())
+  .then(data => dispatch(deleteComment(commentId)),
+        error => console.error('error',error))
+);
+
 
 function getCategories(categories){
  return {
@@ -126,7 +234,6 @@ function getPosts(posts){
 
 
 function getPostsComments(comments){
-  console.log('comments',comments)
  return {
     type: GET_POST_COMMENT,
     comments
@@ -147,24 +254,51 @@ function upVote(post){
    }
 }
 
+function upVoteComent(comment) {
+  return {
+     type: UP_VOTE_COMMENT,
+     comment,
+   }
+}
 
-/*export function addPost ({post}) {
+export function addPost (post) {
   return {
     type: ADD_POST,
     post,
   }
 }
 
-export function editPost ({post}) {
+export function editPost (post) {
   return {
     type: EDIT_POST,
     post,
   }
 }
 
-export function deletePost ({post}) {
+export function deletePost (id) {
   return {
     type: DELETE_POST,
-    post,
+    id,
   }
-}*/
+}
+
+export function addComment(comment) {
+  return {
+    type: ADD_POST_COMMENT,
+    comment,
+  }
+}
+
+export function editComment(comment) {
+  return {
+    type: EDIT_POST_COMMENT,
+    comment,
+  }
+}
+
+export function deleteComment(id) {
+  return {
+    type: DELETE_POST_COMMENT,
+    id,
+  }
+}

@@ -12,11 +12,6 @@ import uuid from 'uuid/v1'
 class AddPostView extends Component {
   state = {
     open: false,
-    author: "",
-    id: "",
-    timestamp: 0,
-    bodyPost: '',
-    categorySelected: ''
   }
 
   handleOpen = () => {
@@ -31,9 +26,7 @@ class AddPostView extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
-    values.timestamp = Date.now()
-    values.id = uuid()
-    this.props.addPost(values)
+    this.props.editThePost(this.props.post.id,values)
     this.handleClose()
   }
 
@@ -49,13 +42,13 @@ class AddPostView extends Component {
       />
     ];
 
-    const {categories} = this.props
+    const {post} = this.props
 
     return (
       <div>
-        <RaisedButton label="Add New Post" onClick={this.handleOpen} />
+        <RaisedButton label="Edit Post" onClick={this.handleOpen} />
         <Dialog
-          title="Add a New Post"
+          title="Edit Post"
           actions={actions}
           modal={false}
           open={this.state.open}
@@ -65,19 +58,25 @@ class AddPostView extends Component {
           <TextField
             hintText="Author"
             name="author"
+            defaultValue={post.author}
+            disabled={true}
+            floatingLabelText="Author:"
+
           /><br/>
-        <select onChange={this.handleChange} name="category">
-            <option value={"react"}>React</option>
-            <option value={"redux"}>Redux</option>
-            <option value={"udacity"}>Udacity</option>
+        <select name="category" disabled >
+            <option value={post.category}>{post.category}</option>
         </select><br/>
         <TextField
           hintText="Post Title"
+          floatingLabelText="Post Title"
           name="title"
+          defaultValue={post.title}
+
         /><br/>
           <TextField
           hintText="Post Body"
           name="body"
+          defaultValue={post.body}
           floatingLabelText="Post Text"
           multiLine={true}
           rows={2}

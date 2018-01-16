@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom'
 import VoteControls from './VoteControls'
+import EditCommentView from './EditCommentView'
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 function formatDate (timestamp) {
@@ -8,14 +11,16 @@ function formatDate (timestamp) {
   return date.toString()
 }
 
-export default function Comment ({ comment }) {
+export default function Comment ({ comment,  clickUpVote, clickDownVote, editComment, deleteComment }) {
   return (
       <div key={comment.id} className="comment">
-        <div className="comment-title">Comment Title:{comment.title}</div>
         <div className="comment-author">Comment Author:{comment.author}</div>
+        <div className="comment-date">Comment Date:{formatDate(comment.timestamp)}</div>
         <div className="comment-body">{comment.body}</div>
         <div className="comment-score">Comment Score: {comment.voteScore}</div>
-        <VoteControls/>
-      </div>
+        <VoteControls isPost={false} id={comment.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote}/>
+        <EditCommentView editComment={editComment} comment={comment}/>
+        <RaisedButton label="Delete comment" onClick={()=> deleteComment(comment.id)} className="addButton"/>
+    </div>
   )
 }

@@ -6,7 +6,12 @@ import {
 	GET_POST_COMMENT,
 	SET_FILTER,
 	GET_CATEGORY_POST,
-	UP_VOTE
+	UP_VOTE,
+	ADD_POST,
+	EDIT_POST,
+	DELETE_POST,
+	UP_VOTE_COMMENT,
+	ADD_POST_COMMENT,EDIT_POST_COMMENT,DELETE_POST_COMMENT
 }from '../actions'
 
 function categories (state = {}, action){
@@ -22,10 +27,24 @@ function posts (state = {}, action){
 	switch (action.type) {
       case GET_ALL_POSTS:
         return [ ...action.posts ]
+
 			case UP_VOTE:
 				return state.map(post => {
 					return post.id === action.post.id ? action.post : post
 				})
+
+			case ADD_POST:
+				return [ ...state,action.post]
+
+			case EDIT_POST:
+				return state.map(post => {
+					return post.id === action.post.id ? action.post : post
+				})
+
+			case DELETE_POST:
+				console.log(action)
+				return state.filter(post => post.id !== action.id)
+
       default:
         return state
     }
@@ -36,29 +55,28 @@ function postComments (state = {}, action) {
       case GET_POST_COMMENT:
 				return [ ...action.comments ]
 
+			case UP_VOTE_COMMENT:
+				return state.map(comment => {
+					return comment.id === action.comment.id ? action.comment : comment
+				})
+
+			case ADD_POST_COMMENT:
+				return [ ...state,action.comment]
+
+			case EDIT_POST_COMMENT:
+				return state.map(comment => {
+					return comment.id === action.comment.id ? action.comment : comment
+				})
+
+			case DELETE_POST_COMMENT:
+				return state.filter(comment => comment.id !== action.id)
+
       default:
         return state
     }
 }
 
-function filter (state = {}, action) {
-	switch (action.type) {
-			case SET_FILTER:
-				return [...state, action.filter]
-			default:
-				return state
-		}
-}
 
-function postByCategory(state = {}, action) {
-	//console.log('action', action)
-	switch (action.type) {
-			case GET_CATEGORY_POST:
-				return [ ...action.postsByCategory ]
-			default:
-				return state
-		}
-}
 
 
 export default combineReducers({

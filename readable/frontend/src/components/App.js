@@ -7,7 +7,9 @@ import {
   getAllPosts,
   getAllCategories,
   getAllPostComments,
-  upVotePost} from '../actions'
+  upVotePost,
+  addNewPost, editThePost, deleteThePost,voteComment,addNewComment,
+  editTheComment,deleteTheComment} from '../actions'
 import Root from './Root'
 import Category from './Category'
 import PostView from './PostView'
@@ -15,31 +17,17 @@ import { Route } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 import CategorieDropdown from './CategorieDropdown'
 
-
 class App extends Component {
-
-  state = {
-  }
-
-  onSelectCategory = (selectedCategory) => {
-    this.props.setFilter(selectedCategory)
-  }
-
-  filterCategoryPost = (selectedCategory) => {
-    this.props.getPostByCategory(selectedCategory)
-  }
 
   toggleShowAllComments = (postId) => {
     this.props.getAllComments(postId)
   }
 
-
-  clickUpVote = (isPost, id) => {//TODO cambiarlo a upVote and downVote Post
-    console.log('clicking')
+  clickUpVote = (isPost, id) => {
     if (isPost){
       this.props.upVotePost(id, true)
     }else {
-      //this.props.upVoteComment(id)
+      this.props.voteComment(id, true)
     }
   }
 
@@ -47,13 +35,35 @@ class App extends Component {
     if (isPost){
       this.props.upVotePost(id, false)
     }else {
-      //this.props.upVoteComment(id)
+      this.props.voteComment(id, false)
     }
   }
 
   addPost = (values) => {
-
+    this.props.addNewPost(values)
   }
+
+  editThePost = (id, values) => {
+    this.props.editThePost(id,values)
+  }
+
+  deleteThePost = (id) => {
+    this.props.deleteThePost(id)
+  }
+
+  addComment = (values) => {
+    this.props.addNewComment(values)
+  }
+
+  editComment = (id, values) => {
+    this.props.editTheComment(id,values)
+  }
+
+  deleteComment = (id) => {
+    this.props.deleteTheComment(id)
+  }
+
+
 
 
   render() {
@@ -66,35 +76,34 @@ class App extends Component {
         )}
 
         <Route exact path='/' render={() => (
-            <div>
-              <Root
-                filter=""
-                categories={categories}
-                posts={posts}
-                clickUpVote = {this.clickUpVote}
-                clickDownVote = {this.clickDownVote}
-                />
-            </div>
-
+            <Root
+              filter=""
+              categories={categories}
+              posts={posts}
+              clickUpVote = {this.clickUpVote}
+              clickDownVote = {this.clickDownVote}
+              addPost = {this.addPost}
+              editThePost = {this.editThePost}
+              deleteThePost={this.deleteThePost}
+              />
         )}/>
 
       <Route exact path="/:category" render={ ({ match }) => {
           return (
-            <div>
               <Category
                 filter={match.params.category}
                 categories={categories}
                 posts={posts}
+                clickUpVote = {this.clickUpVote}
+                clickDownVote = {this.clickDownVote}
+                editThePost = {this.editThePost}
               />
-
-            </div>
           )
         }} />
 
 
       <Route exact path="/:category/:postId" render= { ({ match }) => { //Renders Post View
             return(
-              <div>
                 <PostView
                   posts={posts}
                   categories={categories}
@@ -102,8 +111,12 @@ class App extends Component {
                   toggleShowAllComments={this.toggleShowAllComments}
                   postComments={postComments}
                   clickUpVote = {this.clickUpVote}
+                  clickDownVote = {this.clickDownVote}
+                  editThePost = {this.editThePost}
+                  addComment={this.addComment}
+                  editComment={this.editComment}
+                  deleteComment={this.deleteComment}
                   />
-              </div>
             )
         }} />
 
@@ -115,16 +128,8 @@ class App extends Component {
 
 
 function mapStateToProps (state) {
-  let categories = state.categories
-  let posts = state.posts
-  let comments = state.comments
-  console.log(state)
-  //let filter = state.filter
-  //console.log(comments);
-  //console.log(posts)
   return {
       ...state
-
   }
 }
 
@@ -135,7 +140,15 @@ const mapDispatchToProps = (dispatch) => {
     getAllComments: (postId) => dispatch(getAllPostComments(postId)),
     //setFilter: (filter) => dispatch(setFilter(filter)),
     getPostByCategory: (category) => dispatch(getCategoryPosts(category)),
-    upVotePost: (id, isUpvote) => dispatch(upVotePost(id, isUpvote))
+    upVotePost: (id, isUpvote) => dispatch(upVotePost(id, isUpvote)),
+    addNewPost: (values) => dispatch(addNewPost(values)),
+    editThePost:(id, values) => dispatch(editThePost(id, values)),
+    deleteThePost:(id)=> dispatch(deleteThePost(id)),
+    voteComment: (id, isUpvote) => dispatch(voteComment(id, isUpvote)),
+    addNewComment: (values) => dispatch(addNewComment(values)),
+    editTheComment:(id, values) => dispatch(editTheComment(id, values)),
+    deleteTheComment:(id)=> dispatch(deleteTheComment(id)),
+
   }
 
 }

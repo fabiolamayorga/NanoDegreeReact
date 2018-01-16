@@ -2,14 +2,19 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom'
 import VoteControls from './VoteControls'
 import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import EditPostView from './EditPostView'
+import RaisedButton from 'material-ui/RaisedButton';
+
+
 
 
 function formatDate (timestamp) {
   var date = new Date(timestamp*1000)
-  return date.toString()
+  return date.toLocaleString()
 }
 
-export default function Post ({ post , clickUpVote, clickDownVote }) {
+export default function Post ({ post , clickUpVote, clickDownVote, editThePost,deleteThePost }) {
   return (
         <Card key={post.id} className="post">
           <Link to={`/${post.category}/${post.id}`}>
@@ -22,7 +27,9 @@ export default function Post ({ post , clickUpVote, clickDownVote }) {
             <div className="post-body">{post.body}</div>
             <div className="post-score">Score: {post.voteScore}</div>
           </CardText>
-          <VoteControls postId={post.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote}/>
+          <EditPostView post={post} editThePost={editThePost}/>
+          <RaisedButton onClick={()=> deleteThePost(post.id)} label="Delete Post" />
+          <VoteControls id={post.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote} isPost={true}/>
         </Card>
   )
 }

@@ -9,14 +9,9 @@ import serializeForm from 'form-serialize'
 import uuid from 'uuid/v1'
 
 
-class AddPostView extends Component {
+class EditCommentView extends Component {
   state = {
     open: false,
-    author: "",
-    id: "",
-    timestamp: 0,
-    bodyPost: '',
-    categorySelected: ''
   }
 
   handleOpen = () => {
@@ -32,8 +27,7 @@ class AddPostView extends Component {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
     values.timestamp = Date.now()
-    values.id = uuid()
-    this.props.addPost(values)
+    this.props.editComment(this.props.comment.id,values)
     this.handleClose()
   }
 
@@ -49,13 +43,13 @@ class AddPostView extends Component {
       />
     ];
 
-    const {categories} = this.props
+    const {comment} = this.props
 
     return (
       <div>
-        <RaisedButton label="Add New Post" onClick={this.handleOpen} />
+        <RaisedButton label="Edit comment" onClick={this.handleOpen} class="button"/>
         <Dialog
-          title="Add a New Post"
+          title="Edit comment"
           actions={actions}
           modal={false}
           open={this.state.open}
@@ -65,20 +59,16 @@ class AddPostView extends Component {
           <TextField
             hintText="Author"
             name="author"
+            defaultValue={comment.author}
+            disabled={true}
+            floatingLabelText="Author:"
+
           /><br/>
-        <select onChange={this.handleChange} name="category">
-            <option value={"react"}>React</option>
-            <option value={"redux"}>Redux</option>
-            <option value={"udacity"}>Udacity</option>
-        </select><br/>
-        <TextField
-          hintText="Post Title"
-          name="title"
-        /><br/>
           <TextField
-          hintText="Post Body"
+          hintText="comment Body"
           name="body"
-          floatingLabelText="Post Text"
+          defaultValue={comment.body}
+          floatingLabelText="comment Text"
           multiLine={true}
           rows={2}
           /><br />
@@ -93,4 +83,4 @@ class AddPostView extends Component {
   }
 }
 
-export default AddPostView
+export default EditCommentView

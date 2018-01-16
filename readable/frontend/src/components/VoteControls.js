@@ -6,16 +6,12 @@ import {CardActions} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 
-export default function VoteControls ({ postId , clickUpVote,clickDownVote }) {
+export default function VoteControls ({ id , clickUpVote,clickDownVote, isPost }) {
   return (
       <CardActions className="voteControls">
         <span>Vote:</span>
-        <FlatButton>
-          <ThumbUp onClick = {() => clickUpVote(true, postId)}/>
-        </FlatButton>
-        <FlatButton>
-          <ThumbDown onClick = {() => clickDownVote(true, postId)}/>
-        </FlatButton>
+        <ThumbUp onClick = {() => clickUpVote(isPost, id)}/>
+        <ThumbDown onClick = {() => clickDownVote(isPost, id)}/>
       </CardActions>
 
   )
