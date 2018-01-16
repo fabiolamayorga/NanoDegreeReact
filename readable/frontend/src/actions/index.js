@@ -28,8 +28,6 @@ export const GET_POST_COMMENT = 'GET_POST_COMMENT'
 export const UP_VOTE_COMMENT = 'UP_VOTE_COMMENT'
 
 
-export const SET_FILTER = 'SET_FILTER'
-
 export const getAllCategories = () => dispatch =>(
   fetch(
     `${api}/categories`,
