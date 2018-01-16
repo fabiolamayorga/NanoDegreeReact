@@ -40,7 +40,6 @@ function posts (state = {}, action){
 				})
 
 			case DELETE_POST:
-				console.log(action)
 				return state.filter(post => post.id !== action.id)
 
       default:

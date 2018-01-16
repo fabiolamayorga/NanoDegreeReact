@@ -33,5 +33,7 @@ export default function Post ({ post , clickUpVote, clickDownVote, editThePost,d
             <VoteControls id={post.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote} isPost={true}/>
           </Card>
       )
+
+      
   )
 }

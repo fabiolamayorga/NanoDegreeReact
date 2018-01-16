@@ -11,6 +11,7 @@ function formatDate (timestamp) {
 
 export default function Comment ({ comment,  clickUpVote, clickDownVote, editComment, deleteComment }) {
   return (
+    comment.deleted === false && (
       <div key={comment.id} className="comment">
         <div className="comment-author">Comment Author:{comment.author}</div>
         <div className="comment-date">Comment Date:{formatDate(comment.timestamp)}</div>
@@ -19,6 +20,7 @@ export default function Comment ({ comment,  clickUpVote, clickDownVote, editCom
         <VoteControls isPost={false} id={comment.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote}/>
         <EditCommentView editComment={editComment} comment={comment}/>
         <RaisedButton label="Delete comment" onClick={()=> deleteComment(comment.id)} className="addButton"/>
-    </div>
+      </div>
+    )
   )
 }
