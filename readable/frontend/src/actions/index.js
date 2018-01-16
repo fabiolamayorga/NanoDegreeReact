@@ -51,22 +51,6 @@ export const getAllPosts = () => dispatch =>(
 );
 
 
-export const receiveComments= () => dispatch =>(
-  fetch(
-    `${api}/posts`,
-     {headers}
-   )
-    .then(res => res.json())
-    .then(data =>
-      {
-        dispatch(getPosts(data));
-        data.map(d => (
-          dispatch(getAllPostComments(d.id))
-        ));
-        error => console.error('error',error)})
-);
-
-
 export const getAllPostComments = (postId) => dispatch =>(
   fetch(
     `${api}/posts/${postId}/comments`,

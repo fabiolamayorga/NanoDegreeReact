@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from 'react-router-dom'
 import VoteControls from './VoteControls'
-import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 import EditPostView from './EditPostView'
 import RaisedButton from 'material-ui/RaisedButton';
 

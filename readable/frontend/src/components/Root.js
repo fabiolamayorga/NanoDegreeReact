@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import Post from './Post'
-import CategorieDropdown from './CategorieDropdown'
-import { Link } from 'react-router-dom'
 import AddPostView from './AddPostView'
 import sortBy from 'sort-by'
 
 
 class Root extends Component {
   state = {
-      order: 'timestamp'
+      order: '-timestamp'
   }
   selectOrder = (e) => {
       this.setState({
@@ -21,11 +19,14 @@ class Root extends Component {
 
    return (
      <div className="view-container">
-       <label>Sort Posts By: </label>
-       <select value={this.state.order} onChange={this.selectOrder}>
-            <option value="timestamp">Most Recent</option>
-            <option value="voteScore">Popular</option>
-        </select>
+       <div className="sort-by-dropwdown">
+         <label>Sort Posts By: </label>
+         <select value={this.state.order} onChange={this.selectOrder}>
+              <option value="-timestamp">Most Recent</option>
+              <option value="-voteScore">Popular</option>
+          </select>
+       </div>
+
        <div className='posts-container'>
          {posts.length > 0 && (
            posts.sort(sortBy(this.state.order)).map(post => (

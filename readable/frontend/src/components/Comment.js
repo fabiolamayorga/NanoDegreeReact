@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom'
+import React from "react";
 import VoteControls from './VoteControls'
 import EditCommentView from './EditCommentView'
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 

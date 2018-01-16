@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {BrowserRouter} from 'react-router-dom';
-import {getAllPosts,getAllCategories, receiveComments} from './actions'
+import {getAllPosts,getAllCategories} from './actions'
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -24,7 +24,6 @@ const store = createStore(
 
 store.dispatch(getAllPosts())
 store.dispatch(getAllCategories())
-//store.dispatch(receiveComments())
 
 
 ReactDOM.render(

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './../App.css';
 import { connect } from 'react-redux'
 import {
-  setFilter,
   getCategoryPosts,
   getAllPosts,
   getAllCategories,
@@ -67,7 +66,7 @@ class App extends Component {
 
 
   render() {
-    const {categories, posts, filter, postComments} = this.props
+    const {categories, posts, postComments} = this.props
 
     return (
       <div className="container">
@@ -77,7 +76,6 @@ class App extends Component {
 
         <Route exact path='/' render={() => (
             <Root
-              filter=""
               categories={categories}
               posts={posts}
               clickUpVote = {this.clickUpVote}
@@ -138,7 +136,6 @@ const mapDispatchToProps = (dispatch) => {
     getCategories: (data) => dispatch(getAllCategories()),
     getPosts: (data) => dispatch(getAllPosts()),
     getAllComments: (postId) => dispatch(getAllPostComments(postId)),
-    //setFilter: (filter) => dispatch(setFilter(filter)),
     getPostByCategory: (category) => dispatch(getCategoryPosts(category)),
     upVotePost: (id, isUpvote) => dispatch(upVotePost(id, isUpvote)),
     addNewPost: (values) => dispatch(addNewPost(values)),
