@@ -15,20 +15,23 @@ function formatDate (timestamp) {
 
 export default function Post ({ post , clickUpVote, clickDownVote, editThePost,deleteThePost }) {
   return (
-        <Card key={post.id} className="post">
-          <Link to={`/${post.category}/${post.id}`}>
-            <CardTitle className="post-title">Post Title: {post.title}</CardTitle>
-          </Link>
-          <CardText>
-            <div className="post-author">Author: {post.author}</div>
-            <div className="post-category">Category: {post.category}</div>
-            <div className="post-time">Date: {formatDate(post.timestamp)}</div>
-            <div className="post-body">{post.body}</div>
-            <div className="post-score">Score: {post.voteScore}</div>
-          </CardText>
-          <EditPostView post={post} editThePost={editThePost}/>
-          <RaisedButton onClick={()=> deleteThePost(post.id)} label="Delete Post" />
-          <VoteControls id={post.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote} isPost={true}/>
-        </Card>
+
+        post.deleted === false && (
+          <Card key={post.id} className="post">
+            <Link to={`/${post.category}/${post.id}`}>
+              <CardTitle className="post-title">Post Title: {post.title}</CardTitle>
+            </Link>
+            <CardText>
+              <div className="post-author">Author: {post.author}</div>
+              <div className="post-category">Category: {post.category}</div>
+              <div className="post-time">Date: {formatDate(post.timestamp)}</div>
+              <div className="post-body">{post.body}</div>
+              <div className="post-score">Score: {post.voteScore}</div>
+            </CardText>
+            <EditPostView post={post} editThePost={editThePost}/>
+            <RaisedButton onClick={()=> deleteThePost(post.id)} label="Delete Post" />
+            <VoteControls id={post.id} clickUpVote={clickUpVote} clickDownVote={clickDownVote} isPost={true}/>
+          </Card>
+      )
   )
 }
