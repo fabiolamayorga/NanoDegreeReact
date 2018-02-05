@@ -83,8 +83,7 @@ export const upVotePost = (id, isUpvote) => dispatch => (
   .then(res => res.json())
   .then(data => {
       dispatch(upVote(data));
-      console.log('action', data)
-        error => console.error('error',error)})
+      error => console.error('error',error)})
 );
 
 export const voteComment = (id, isUpVote) => dispatch => (
@@ -101,7 +100,6 @@ export const voteComment = (id, isUpVote) => dispatch => (
   .then(res => res.json())
   .then(data => {
       dispatch(upVoteComent(data));
-      console.log('action', data)
         error => console.error('error',error)})
 )
 
@@ -111,7 +109,8 @@ export const addNewPost = (values) => dispatch => (
       method: 'POST',
       headers: {
         ...headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+
       },
       body: JSON.stringify(values)
     }
@@ -119,7 +118,6 @@ export const addNewPost = (values) => dispatch => (
   .then(res => res.json())
   .then(data => {
       dispatch(addPost(data));
-      console.log('action', data)
         error => console.error('error',error)})
 )
 
@@ -129,7 +127,8 @@ export const editThePost = (id, values) => dispatch => (
       method: 'PUT',
       headers: {
         ...headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify(values)
     }
@@ -137,7 +136,6 @@ export const editThePost = (id, values) => dispatch => (
   .then(res => res.json())
   .then(data => {
       dispatch(editPost(data));
-      console.log('action', data)
         error => console.error('error',error)})
 )
 
@@ -146,9 +144,12 @@ export const deleteThePost = (postId) => dispatch =>(
     `${api}/posts/${postId}`,{
       method: 'DELETE',
       headers: {
-        ...headers }
+        ...headers,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*'
+       }
     })
-  .then(res => res.text())
+  .then(res => res)
   .then(data => dispatch(deletePost(postId)),
         error => console.error('error',error))
 );

@@ -63,8 +63,6 @@ class App extends Component {
   }
 
 
-
-
   render() {
     const {categories, posts, postComments} = this.props
 
