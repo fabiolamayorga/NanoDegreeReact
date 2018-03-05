@@ -2,9 +2,9 @@ import React from 'react'
 import { Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import { black } from '../utils/colors'
 
-export default function Input ({ children, style = {}, placeholder, onChange }) {
+export default function Input ({ children, style = {}, placeholder, onChangeText }) {
   return (
-      <TextInput style={[styles.reset, style]} placeholder={placeholder} onChange={onChange}/>
+      <TextInput style={[styles.reset, style]} placeholder={placeholder} onChangeText={onChangeText}/>
   )
 }
 

@@ -16,8 +16,12 @@ const styles = StyleSheet.create({
     color: white,
     backgroundColor: black,
     padding: 20,
-    width: 'auto',
+    width: 200,
     borderRadius: 8,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 20,
+    fontSize: 20,
 
   }
 })

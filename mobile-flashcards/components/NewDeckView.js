@@ -6,26 +6,30 @@ import { StyleSheet,
   TouchableOpacity} from 'react-native'
 import TextButton from './TextButton';
 import Input from './Input';
-import { saveDeckTitle } from '../utils/api'
-
+import { saveDeck } from '../utils/api';
+import IndividualDeckView from './IndividualDeckView';
 
 class NewDeckView extends Component {
 
-  addNewDeck = () => {
-    console.log('adding deck');
+  state = {
+    title: '',
   }
 
-  getDeckTitle = (e) => {
-    const title = e.target.value;
-    console.log('title',title);
-    this.setState({
-      title,
-    })
+  addNewDeck = () => {
+    saveDeck(this.state.title)
+      .then((deck) => {
+        if (deck) {
+          this.props.navigation.navigate(
+              'IndividualDeckView',
+              { deckId: deck.id }
+          )
+        }
+      });
+      this.props.updateDataFromApi;
+
   }
 
   render(){
-        console.log(this.state);
-
     return (
       <View style={styles.container}>
         <Text style={{fontSize: 40}}>
