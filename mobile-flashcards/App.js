@@ -7,6 +7,7 @@ import { black, white } from './utils/colors'
 import NewQuestionView from './components/NewQuestionView';
 import QuizView from './components/QuizView';
 import { setLocalNotification } from './utils/helpers'
+import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 import { TabNavigator, StackNavigator } from 'react-navigation'
@@ -15,13 +16,15 @@ const Tabs = TabNavigator({
   Decks: {
     screen: DeckListView,
     navigationOptions: {
-      tabBarLabel: 'Decks'
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={25} color={tintColor} />
     },
   },
   NewDeck: {
     screen: NewDeckView,
     navigationOptions: {
-      tabBarLabel: 'New Deck'
+      tabBarLabel: 'New Deck',
+      tabBarIcon: ({ tintColor }) => <MaterialIcons name='library-add' size={25} color={tintColor} />
     },
   }
 });

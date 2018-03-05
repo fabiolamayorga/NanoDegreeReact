@@ -21,7 +21,7 @@ class NewDeckView extends Component {
         if (deck) {
           this.props.navigation.navigate(
               'IndividualDeckView',
-              { deckId: deck.id }
+              { deck }
           )
         }
       });

@@ -13,8 +13,11 @@ import IndividualDeckView from './IndividualDeckView';
 class NewQuestionView extends Component {
 
   componentDidMount = () => {
-    const deckId = this.props.navigation.state.params.deckId;
+    const deckId = this.props.navigation.state.params.deck.id;
     this.setState({deckId});
+
+    console.log(this.props.navigation.state.params.deck);
+    //console.log(deckId);
   }
 
   addQuestion = () => {
@@ -23,13 +26,10 @@ class NewQuestionView extends Component {
       answer: this.state.answer,
     };
 
-    addCardToDeck(this.state.deckId, deck); //Add new question
-
-    //onPress = {()=> {
-      this.props.navigation.navigate(
-        'IndividualDeckView',
-        { deckId: this.state.deckId }
-    )//}}
+    addCardToDeck(this.state.deckId, deck).then(()=>{
+      this.props.navigation.state.params.onGoBack();
+      this.props.navigation.goBack();
+    }); //Add new question
   }
 
   render(){

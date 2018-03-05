@@ -26,20 +26,23 @@ class IndividualDeckView extends Component {
   }
 
   componentDidMount = () => {
-    const deckId = this.props.navigation.state.params.deckId;
+  /*  const deckId = this.props.navigation.state.params.deckId;
 
     getDeck(deckId).then((deck) => {
       if (deck) {
         this.setState({ deck })
       }
-    });
+    });*/
   }
 
   addQuestion = () => {
     console.log('props',this.props);
     this.props.navigation.navigate(
         'NewQuestionView',
-        {deckId: this.state.deck.id}
+        {
+          deck: this.state.deck || this.props.navigation.state.params.deck,
+          onGoBack: this.onGoBack
+        }
     )
   }
 
@@ -53,12 +56,23 @@ class IndividualDeckView extends Component {
      .then(setLocalNotification)
   }
 
-  render(){
-    const cards = this.state.deck.cards || [];
+  onGoBack = () => {
+  const deck = this.props.navigation.state.params.deck;
 
+    getDeck(deck.id).then((result) =>
+      this.setState({
+        deck: result
+      })
+    )
+  }
+
+  render(){
+    console.log(this.props.navigation);
+    const cards = this.state.deck.cards || this.props.navigation.state.params.deck.cards;
+    const deck = this.state.deck  || this.props.navigation.state.params.deck
     return (
         <View style={styles.container}>
-          <Text style={{fontSize: 40, textAlign: 'center'}}>{this.state.deck.title}</Text>
+          <Text style={{fontSize: 40, textAlign: 'center'}}>{deck.title}</Text>
           <Text style={{fontSize: 20, textAlign: 'center', padding:20}}> {cards.length} cards</Text>
           <TextButton onPress={this.addQuestion}>Add Card</TextButton>
           <TextButton style={styles.invertedButton} onPress={this.startQuiz}>Start Quiz</TextButton>

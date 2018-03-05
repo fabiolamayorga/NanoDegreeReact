@@ -17,42 +17,40 @@ class DeckListView extends Component {
   }
 
   componentDidMount = () => {
-    getDecks()
-    .then((decks)=> this.setState({decks}));
-    //this.updateDataFromApi();
+    this.getDecks();
+    this._sub = this.props.navigation.addListener(
+      'didFocus',
+      this.getDecks
+    );
   }
 
-  updateDataFromApi = () => {
+  componentWillUnmount() {
+    this._sub.remove();
+  }
+
+  getDecks = () => {
     getDecks()
     .then((decks)=> this.setState({decks}));
-
-    this.props.navigation.navigate(
-        'IndividualDeckView',
-        { deckId: deck.id,
-          updateDataFromApi: this.updateDataFromApi()
-        }
-      )
   }
 
   renderItem = (item) => {
-    //(deck) =>{
       const deck = item.item;
-      //console.log(deck);
       return (
-        <View style={styles.decksList} id={deck.id}>
-          <TouchableOpacity onPress={this.updateDataFromApi}>
+        <View style={styles.decksList} key={deck.id}>
+          <TouchableOpacity onPress={()=> {this.props.navigation.navigate(
+                  'IndividualDeckView',
+                  { deck }
+                )}}>
             <Text style={{fontSize: 40, textAlign: 'center'}}>{deck.title}</Text>
             <Text style={{textAlign: 'center'}}>{(deck.cards).length} cards</Text>
           </TouchableOpacity>
         </View>
       )
-    //}
   }
 
 
   render(){
     const decks = this.state.decks;
-    console.log(decks);
     return (
       <View style={styles.container}>
         {!!decks &&
